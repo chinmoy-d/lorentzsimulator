@@ -5,10 +5,10 @@ let rhoSlider, startButton, resetButton;
 let isAnimating = false;
 
 function setup() {
-  let canvas = createCanvas(600, 400, WEBGL); // Larger canvas size
-  canvas.parent("sketch-holder");  // Place the canvas inside the div
+  createCanvas(600, 400, WEBGL);
   
-  setupControls(); // Set up the controls from HTML
+  // Set up controls from HTML
+  setupControls();
 }
 
 function startAnimation() {
@@ -34,9 +34,6 @@ function draw() {
   
   // Update the value of rho from the slider
   rho = document.getElementById('rhoSlider').value;
-  
-  // Display the current slider value next to it
-  document.getElementById('sliderValue').textContent = rho;
 
   // Time step and Lorenz system calculation
   let dt = 0.01;
@@ -75,11 +72,6 @@ function setupControls() {
   resetButton = document.getElementById('resetButton');
   resetButton.addEventListener('click', resetAnimation);
 
-  // Update the p5.js slider value (in HTML)
+  // Update the p5.js slider value
   rhoSlider = document.getElementById('rhoSlider');
-
-  // Update the slider value in real-time as the slider is moved
-  rhoSlider.addEventListener('input', function() {
-    document.getElementById('sliderValue').textContent = rhoSlider.value;
-  });
 }
