@@ -1,94 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lorenz Attractor Simulation</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #222;
-            color: white;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            flex-direction: column;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-        canvas {
-            margin-bottom: 20px;
-            width: 100%;
-            height: auto;
-        }
-        .controls {
-            margin-top: 20px;
-            width: 100%;
-            max-width: 600px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .control-row {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-            width: 100%;
-            justify-content: center;
-        }
-        .control-row input[type="range"] {
-            flex-grow: 1;
-            margin-right: 10px;
-        }
-        .control-row span {
-            color: lightgray;
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            margin: 5px;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        @media (max-width: 768px) {
-            body {
-                padding: 5px;
-            }
-            button {
-                padding: 8px 16px;
-                font-size: 14px;
-            }
-            .control-row input[type="range"] {
-                width: 80%;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lorenz Attractor Animation</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #222;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    #container {
+      position: relative;
+      width: 600px;
+      height: 400px;
+    }
+    canvas {
+      display: block;
+      margin: 0 auto;
+    }
+    .controls {
+      position: absolute;
+      bottom: 20px;
+      left: 10px;
+      color: white;
+      width: 100%;
+      text-align: center;
+    }
+    .slider {
+      margin: 10px 0;
+      width: 200px;
+    }
+    button {
+      background-color: #555;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #777;
+    }
+  </style>
 </head>
 <body>
-    <h1>Lorenz Attractor</h1>
-    <div id="sketch-holder"></div>
-    <div class="controls">
-        <div class="control-row">
-            <label for="rhoSlider">Input (Rho): </label>
-            <input type="range" id="rhoSlider" min="20" max="40" step="0.1" value="28">
-            <span id="sliderValue">28</span>
-        </div>
-        <div class="control-row">
-            <button id="startButton">Start</button>
-            <button id="resetButton">Reset</button>
-        </div>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
-    <script src="sketch.js"></script>
+
+  <div id="container">
+    <!-- p5.js Sketch will render here -->
+  </div>
+
+  <div class="controls">
+    <label for="rhoSlider">Input: </label>
+    <input id="rhoSlider" class="slider" type="range" min="20" max="40" value="28" step="0.1">
+    <br>
+    <button id="startButton">Start</button>
+    <button id="resetButton">Reset</button>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+  <script src="sketch.js"></script>
+
 </body>
 </html>
