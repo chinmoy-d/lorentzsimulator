@@ -10,7 +10,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 400px;
+      height: 100vh; /* Ensure the page takes full screen height */
       background-color: #222;
       color: white;
       font-family: Arial, sans-serif;
@@ -27,14 +27,15 @@
     }
     .controls {
       position: absolute;
-      bottom: 20px;
-      left: 10px;
+      bottom: 10px; /* Reduced space from the canvas */
+      left: 50%;
+      transform: translateX(-50%); /* Center buttons horizontally */
       color: white;
       width: 100%;
       text-align: center;
     }
     .slider {
-      margin: 10px 0;
+      margin: 5px 0; /* Reduced space around slider */
       width: 200px;
     }
     button {
