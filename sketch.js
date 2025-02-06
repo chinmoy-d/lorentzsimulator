@@ -1,37 +1,43 @@
-let x = 0.01, y = 0, z = 0;
-let sigma = 10, rho = 28, beta = 8/3;
-let points = [];
-let rhoSlider;
+const canvas = document.getElementById('lorentzCanvas');
+const ctx = canvas.getContext('2d');
+const rangeSlider = document.getElementById('rangeSlider');
+const rangeValue = document.getElementById('rangeValue');
+const resetButton = document.getElementById('resetButton');
 
-function setup() {
-  createCanvas(600, 400, WEBGL);
-  colorMode(HSB);
-  rhoSlider = createSlider(20, 40, 28, 0.1);
-  rhoSlider.position(10, 10);
-}
+let sigma = 10, rho = 28, beta = 8/3;
+let x = 0.1, y = 0, z = 0;
 
 function draw() {
-  background(0);
-  rotateX(frameCount * 0.01);
-  rotateY(frameCount * 0.01);
-  
-  rho = rhoSlider.value();
-
-  let dt = 0.01;
-  let dx = sigma * (y - x) * dt;
-  let dy = (x * (rho - z) - y) * dt;
-  let dz = (x * y - beta * z) * dt;
-
-  x += dx;
-  y += dy;
-  z += dz;
-  points.push(createVector(x, y, z));
-
-  noFill();
-  beginShape();
-  for (let i = 0; i < points.length; i++) {
-    stroke((i % 255), 255, 255);
-    vertex(points[i].x * 5, points[i].y * 5, points[i].z * 5);
-  }
-  endShape();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.beginPath();
+    ctx.arc(300 + x * 5, 200 + z * 5, 2, 0, 2 * Math.PI);
+    ctx.fill();
 }
+
+function update() {
+    const dt = 0.01;
+    let dx = sigma * (y - x);
+    let dy = x * (rho - z) - y;
+    let dz = x * y - beta * z;
+    
+    x += dx * dt;
+    y += dy * dt;
+    z += dz * dt;
+
+    draw();
+}
+
+function reset() {
+    x = 0.1; y = 0; z = 0;
+    rangeSlider.value = 10;
+    rangeValue.textContent = 10;
+}
+
+rangeSlider.addEventListener('input', (e) => {
+    rangeValue.textContent = e.target.value;
+    rho = parseFloat(e.target.value);
+});
+
+resetButton.addEventListener('click', reset);
+
+setInterval(update, 20);
