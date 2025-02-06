@@ -5,7 +5,7 @@ let rhoSlider, startButton, resetButton;
 let isAnimating = false;
 
 function setup() {
-  let canvas = createCanvas(800, 600, WEBGL); // Larger canvas size
+  let canvas = createCanvas(600, 400, WEBGL); // Larger canvas size
   canvas.parent("sketch-holder");  // Place the canvas inside the div
   
   setupControls(); // Set up the controls from HTML
