@@ -1,55 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lorenz Attractor Animation</title>
-  <style>
-    body {
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: #222;
-      color: white;
-      font-family: Arial, sans-serif;
-      text-align: center;
-    }
-    #container {
-      position: relative;
-      width: 600px;
-      height: 400px;
-    }
-    canvas {
-      display: block;
-      margin: 0 auto;
-    }
-    .controls {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      color: white;
-    }
-    .slider {
-      margin: 10px 0;
-    }
-  </style>
-</head>
-<body>
+let x = 0.01, y = 0, z = 0;
+let sigma = 10, rho = 28, beta = 8 / 3;
+let points = [];
+let rhoSlider, startButton, resetButton;
+let isAnimating = false;
 
-  <div id="container">
-    <div class="controls">
-      <label for="rhoSlider">Rho: </label>
-      <input id="rhoSlider" class="slider" type="range" min="20" max="40" value="28" step="0.1">
-      <br>
-      <button id="startButton">Start</button>
-      <button id="resetButton">Reset</button>
-    </div>
-  </div>
+function setup() {
+  createCanvas(600, 400, WEBGL);
+  colorMode(HSB);
+  
+  // Create slider for rho value
+  rhoSlider = createSlider(20, 40, 28, 0.1);
+  rhoSlider.position(10, 10);
+  
+  // Create Start button
+  startButton = createButton('Start');
+  startButton.position(10, 40);
+  startButton.mousePressed(startAnimation);
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
-  <script src="sketch.js"></script>
+  // Create Reset button
+  resetButton = createButton('Reset');
+  resetButton.position(70, 40);
+  resetButton.mousePressed(resetAnimation);
+}
 
-</body>
-</html>
+function startAnimation() {
+  isAnimating = true;
+  loop(); // Start the animation loop
+}
+
+function resetAnimation() {
+  isAnimating = false;
+  points = [];
+  x = 0.01;
+  y = 0;
+  z = 0;
+  loop(); // Reset and start animating from the beginning
+}
+
+function draw() {
+  background(0);
+  
+  // Rotate the view for 3D effect
+  rotateX(frameCount * 0.01);
+  rotateY(frameCount * 0.01);
+  
+  // Update the value of rho from the slider
+  rho = rhoSlider.value();
+
+  // Time step and Lorenz system calculation
+  let dt = 0.01;
+  let dx = sigma * (y - x) * dt;
+  let dy = (x * (rho - z) - y) * dt;
+  let dz = (x * y - beta * z) * dt;
+
+  // Update the state variables
+  x += dx;
+  y += dy;
+  z += dz;
+
+  // Store the new points in the points array
+  points.push(createVector(x, y, z));
+
+  // Draw the Lorenz attractor as a 3D path
+  noFill();
+  beginShape();
+  for (let i = 0; i < points.length; i++) {
+    stroke((i % 255), 255, 255);
+    vertex(points[i].x * 5, points[i].y * 5, points[i].z * 5);
+  }
+  endShape();
+
+  // Stop the animation if it's not active
+  if (!isAnimating) {
+    noLoop(); // Pause the animation when it's stopped
+  }
+}
