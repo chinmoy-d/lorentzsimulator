@@ -7,7 +7,8 @@ let isAnimating = false;
 function setup() {
   createCanvas(600, 400, WEBGL);
   
-  // Don't create controls here as they are already in the HTML
+  // Set up controls from HTML
+  setupControls();
 }
 
 function startAnimation() {
@@ -70,4 +71,7 @@ function setupControls() {
   
   resetButton = document.getElementById('resetButton');
   resetButton.addEventListener('click', resetAnimation);
+
+  // Update the p5.js slider value
+  rhoSlider = document.getElementById('rhoSlider');
 }
