@@ -1,53 +1,55 @@
-const canvas = document.getElementById('lorentzCanvas');
-const ctx = canvas.getContext('2d');
-const rangeSlider = document.getElementById('rangeSlider');
-const rangeValue = document.getElementById('rangeValue');
-const startButton = document.getElementById('startButton');
-const resetButton = document.getElementById('resetButton');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lorenz Attractor Animation</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #222;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    #container {
+      position: relative;
+      width: 600px;
+      height: 400px;
+    }
+    canvas {
+      display: block;
+      margin: 0 auto;
+    }
+    .controls {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      color: white;
+    }
+    .slider {
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
 
-let sigma = 10, rho = 28, beta = 8/3;
-let x = 0.1, y = 0, z = 0;
-let interval;
+  <div id="container">
+    <div class="controls">
+      <label for="rhoSlider">Rho: </label>
+      <input id="rhoSlider" class="slider" type="range" min="20" max="40" value="28" step="0.1">
+      <br>
+      <button id="startButton">Start</button>
+      <button id="resetButton">Reset</button>
+    </div>
+  </div>
 
-function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.beginPath();
-    ctx.arc(300 + x * 5, 200 + z * 5, 2, 0, 2 * Math.PI);
-    ctx.fill();
-}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+  <script src="sketch.js"></script>
 
-function update() {
-    const dt = 0.01;
-    let dx = sigma * (y - x);
-    let dy = x * (rho - z) - y;
-    let dz = x * y - beta * z;
-    
-    x += dx * dt;
-    y += dy * dt;
-    z += dz * dt;
-
-    draw();
-}
-
-function start() {
-    clearInterval(interval);
-    interval = setInterval(update, 20);
-}
-
-function reset() {
-    clearInterval(interval);
-    x = 0.1; y = 0; z = 0;
-    rangeSlider.value = 10;
-    rangeValue.textContent = 10;
-    draw();
-}
-
-rangeSlider.addEventListener('input', (e) => {
-    rangeValue.textContent = e.target.value;
-    rho = parseFloat(e.target.value);
-});
-
-startButton.addEventListener('click', start);
-resetButton.addEventListener('click', reset);
-
-draw();  // Initial draw to show the starting point
+</body>
+</html>
