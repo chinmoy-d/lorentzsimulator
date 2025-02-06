@@ -6,21 +6,8 @@ let isAnimating = false;
 
 function setup() {
   createCanvas(600, 400, WEBGL);
-  colorMode(HSB);
   
-  // Create slider for rho value
-  rhoSlider = createSlider(20, 40, 28, 0.1);
-  rhoSlider.position(10, 10);
-  
-  // Create Start button
-  startButton = createButton('Start');
-  startButton.position(10, 40);
-  startButton.mousePressed(startAnimation);
-
-  // Create Reset button
-  resetButton = createButton('Reset');
-  resetButton.position(70, 40);
-  resetButton.mousePressed(resetAnimation);
+  // Don't create controls here as they are already in the HTML
 }
 
 function startAnimation() {
@@ -45,7 +32,7 @@ function draw() {
   rotateY(frameCount * 0.01);
   
   // Update the value of rho from the slider
-  rho = rhoSlider.value();
+  rho = document.getElementById('rhoSlider').value;
 
   // Time step and Lorenz system calculation
   let dt = 0.01;
@@ -74,4 +61,13 @@ function draw() {
   if (!isAnimating) {
     noLoop(); // Pause the animation when it's stopped
   }
+}
+
+function setupControls() {
+  // Set up Start and Reset buttons
+  startButton = document.getElementById('startButton');
+  startButton.addEventListener('click', startAnimation);
+  
+  resetButton = document.getElementById('resetButton');
+  resetButton.addEventListener('click', resetAnimation);
 }
