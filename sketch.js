@@ -77,4 +77,9 @@ function setupControls() {
 
   // Update the p5.js slider value (in HTML)
   rhoSlider = document.getElementById('rhoSlider');
+
+  // Update the slider value in real-time as the slider is moved
+  rhoSlider.addEventListener('input', function() {
+    document.getElementById('sliderValue').textContent = rhoSlider.value;
+  });
 }
