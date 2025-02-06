@@ -2,10 +2,12 @@ const canvas = document.getElementById('lorentzCanvas');
 const ctx = canvas.getContext('2d');
 const rangeSlider = document.getElementById('rangeSlider');
 const rangeValue = document.getElementById('rangeValue');
+const startButton = document.getElementById('startButton');
 const resetButton = document.getElementById('resetButton');
 
 let sigma = 10, rho = 28, beta = 8/3;
 let x = 0.1, y = 0, z = 0;
+let interval;
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -27,10 +29,17 @@ function update() {
     draw();
 }
 
+function start() {
+    clearInterval(interval);
+    interval = setInterval(update, 20);
+}
+
 function reset() {
+    clearInterval(interval);
     x = 0.1; y = 0; z = 0;
     rangeSlider.value = 10;
     rangeValue.textContent = 10;
+    draw();
 }
 
 rangeSlider.addEventListener('input', (e) => {
@@ -38,6 +47,7 @@ rangeSlider.addEventListener('input', (e) => {
     rho = parseFloat(e.target.value);
 });
 
+startButton.addEventListener('click', start);
 resetButton.addEventListener('click', reset);
 
-setInterval(update, 20);
+draw();  // Initial draw to show the starting point
